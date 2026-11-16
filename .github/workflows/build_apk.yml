@@ -10,6 +10,10 @@ jobs:
   build:
     runs-on: ubuntu-22.04
 
+    env:
+      ANDROID_HOME: /usr/local/lib/android/sdk
+      ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
@@ -20,16 +24,11 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
-
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-      working-directory: .
 
     - name: Build Debug APK
       run: ./gradlew assembleDebug
-      working-directory: .
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
