@@ -1,13 +1,20 @@
 package com.calisthenicspro.ui.workout
 
+import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.ui.PlayerView
+import com.calisthenicspro.R
 import com.calisthenicspro.data.WorkoutRoutine
 import com.calisthenicspro.databinding.ActivityWorkoutBinding
 import com.calisthenicspro.utils.PreferenceManager
 import com.calisthenicspro.utils.WorkoutHistoryEntry
 import com.google.gson.Gson
+import java.lang.reflect.Field
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -22,6 +29,7 @@ class WorkoutActivity : AppCompatActivity() {
     private var countdownTimer: CountDownTimer? = null
     private var sessionMinutes = 0
     private var hasCompletedSession = false
+    private var player: ExoPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +37,8 @@ class WorkoutActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         preferenceManager = PreferenceManager(this)
+        player = ExoPlayer.Builder(this).build()
+        binding.playerView.player = player
 
         val rawRoutine = intent.getStringExtra("routine_json")
         val selectedDayIndex = intent.getIntExtra("selected_day_index", 0)
@@ -60,6 +70,7 @@ class WorkoutActivity : AppCompatActivity() {
             binding.tvExerciseMeta.text = "هیچ تمرینی برای نمایش وجود ندارد"
             binding.tvTimer.text = "00:00"
             binding.tvProgress.text = "0 / 0"
+            binding.playerView.visibility = View.GONE
         }
     }
 
@@ -72,9 +83,74 @@ class WorkoutActivity : AppCompatActivity() {
         binding.tvExerciseMeta.text = "${exercise.sets} ست × ${exercise.reps} تکرار · ${exercise.restSeconds}s استراحت · ${exercise.notes}"
         binding.tvProgress.text = "${activeExerciseIndex + 1} / ${day.exercises.size}"
 
+        playExerciseVideo(exercise.name)
+
         val cycleSeconds = maxOf(20, exercise.reps * 2 + exercise.restSeconds)
         sessionMinutes = routine.days.sumOf { it.durationMinutes }
         startCountdown(cycleSeconds)
+    }
+
+    private fun playExerciseVideo(exerciseName: String) {
+        val videoResId = resolveExerciseVideoResId(exerciseName) ?: run {
+            binding.playerView.visibility = View.GONE
+            return
+        }
+
+        binding.playerView.visibility = View.VISIBLE
+        val uri = Uri.parse("android.resource://${packageName}/$videoResId")
+        val mediaItem = MediaItem.fromUri(uri)
+
+        player?.setMediaItem(mediaItem)
+        player?.prepare()
+        player?.playWhenReady = true
+    }
+
+    private fun resolveExerciseVideoResId(exerciseName: String): Int? {
+        val normalized = exerciseName.lowercase(Locale.US)
+            .replace("&", "and")
+            .replace("-", "_")
+            .replace(" ", "_")
+            .replace("/", "_")
+            .replace("[^a-z0-9_]".toRegex(), "")
+            .trim('_')
+
+        val candidates = linkedSetOf(
+            "bodyweight_fitness_$normalized",
+            "bodyweight_fitness_${normalized}_mp4",
+            "bodyweight_fitness_${normalized}_exercise",
+            "bodyweight_fitness_${normalized}_movement"
+        )
+
+        val aliases = mapOf(
+            "push_up" to "bodyweight_fitness_pushup",
+            "pull_up" to "bodyweight_fitness_pullup",
+            "squat" to "bodyweight_fitness_squat",
+            "plank" to "bodyweight_fitness_plank",
+            "burpee" to "bodyweight_fitness_burpees",
+            "dips" to "bodyweight_fitness_parallel_bar_dips",
+            "pushup" to "bodyweight_fitness_pushup",
+            "pullup" to "bodyweight_fitness_pullup",
+            "lunge" to "bodyweight_fitness_deep_step_up",
+            "glute_bridge" to "bodyweight_fitness_arch"
+        )
+
+        val selectedName = aliases[normalized] ?: candidates.firstOrNull { name ->
+            try {
+                R.raw::class.java.getField(name)
+                true
+            } catch (_: Exception) {
+                false
+            }
+        }
+
+        return selectedName?.let { rawName ->
+            try {
+                val field: Field = R.raw::class.java.getField(rawName)
+                field.getInt(null)
+            } catch (_: Exception) {
+                null
+            }
+        }
     }
 
     private fun nextExercise() {
@@ -159,8 +235,14 @@ class WorkoutActivity : AppCompatActivity() {
         }.start()
     }
 
+    override fun onStop() {
+        super.onStop()
+        player?.pause()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         countdownTimer?.cancel()
+        player?.release()
     }
 }
