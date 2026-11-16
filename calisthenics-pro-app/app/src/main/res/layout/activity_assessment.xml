@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/background"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="تعیین سطح تمرینی شما"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="لطفاً سطح فعلی قدرت بدنی خود را انتخاب کنید تا حرکات و روتین متناسب با شما تنظیم شود:"
+        android:textColor="#CCCCCC"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginBottom="24dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerLevel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/surface"
+        android:layout_marginBottom="32dp"/>
+
+    <Button
+        android:id="@+id/btnSaveAssessment"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="تایید و شروع برنامه‌ریزی"
+        android:backgroundTint="@color/secondary"
+        android:textColor="@color/white"
+        android:textSize="16sp"/>
+
+</LinearLayout>

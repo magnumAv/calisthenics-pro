@@ -1,0 +1,12 @@
+<resources>
+    <color name="primary">#FF2A2A2A</color>
+    <color name="primary_variant">#FF1F1F1F</color>
+    <color name="primary_container">#FF3D3D3D</color>
+    <color name="on_primary_container">#FFFFFFFF</color>
+    <color name="secondary">#FFFF5722</color>
+    <color name="background">#FF121212</color>
+    <color name="surface">#FF1E1E1E</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="black">#FF000000</color>
+    <color name="accent">#FF00E676</color>
+</resources>

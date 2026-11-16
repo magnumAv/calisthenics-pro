@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">کلیستنیکس پرو</string>
+    <string name="nav_home">خانه</string>
+    <string name="nav_workouts">تمرینات</string>
+    <string name="nav_record">ثبت رکورد</string>
+    <string name="nav_profile">پروفایل</string>
+    <string name="settings">تنظیمات</string>
+    <string name="analytics">آمار و پیشرفت</string>
+    <string name="start_workout">شروع تمرین</string>
+    <string name="recommended_routine">برنامه پیشنهادی (رردیت)</string>
+    <string name="skill_work">حرکات مهارتی (Skill Work)</string>
+    <string name="strength_work">حرکات قدرتی (Strength Work)</string>
+    <string name="warmup">گرم کردن و تحرک (Warmup)</string>
+    <string name="timer">تایمر تمرینی</string>
+    <string name="music_player">موزیک تمرین</string>
+</resources>
