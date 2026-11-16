@@ -30,9 +30,18 @@ class WorkoutPlanFragment : Fragment() {
         }
 
         val title = TextView(requireContext()).apply {
-            text = "برنامه تمرینی"
-            textSize = 24f
+            text = "Workout plan"
+            textSize = 26f
             setTextColor(Color.WHITE)
+            gravity = Gravity.CENTER
+            setPadding(0, 0, 0, 8)
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+        }
+
+        val subtitle = TextView(requireContext()).apply {
+            text = "Progressive bodyweight program"
+            textSize = 15f
+            setTextColor(0xFFB8C4D9.toInt())
             gravity = Gravity.CENTER
             setPadding(0, 0, 0, 16)
         }
@@ -96,6 +105,7 @@ class WorkoutPlanFragment : Fragment() {
         }
 
         root.addView(title)
+        root.addView(subtitle)
         root.addView(daySelector)
         root.addView(planText)
         root.addView(button)

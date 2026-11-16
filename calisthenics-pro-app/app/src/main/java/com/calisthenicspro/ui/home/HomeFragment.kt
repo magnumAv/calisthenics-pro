@@ -39,10 +39,27 @@ class HomeFragment : Fragment() {
 
         val title = TextView(requireContext()).apply {
             text = "Calisthenics Pro"
-            textSize = 28f
+            textSize = 30f
             setTextColor(Color.WHITE)
             gravity = Gravity.CENTER
-            setPadding(0, 0, 0, 16)
+            setPadding(0, 0, 0, 8)
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+        }
+
+        val subtitle = TextView(requireContext()).apply {
+            text = "Build strength • improve mobility • stay consistent"
+            textSize = 15f
+            setTextColor(0xFFB8C4D9.toInt())
+            gravity = Gravity.CENTER
+            setPadding(0, 0, 0, 18)
+        }
+
+        val statHeader = TextView(requireContext()).apply {
+            text = "Your progress"
+            textSize = 18f
+            setTextColor(Color.WHITE)
+            setPadding(0, 0, 0, 8)
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
         }
 
         val statPanel = LinearLayout(requireContext()).apply {
@@ -71,14 +88,22 @@ class HomeFragment : Fragment() {
         }
 
         val summaryText = TextView(requireContext()).apply {
-            text = "هدف هفته: ${preferenceManager.weeklyGoal}\nآخرین جلسه: ${preferenceManager.lastWorkoutMinutes} دقیقه\nرکورد تداوم: ${preferenceManager.workoutStreak} روز"
+            text = "This week goal: ${preferenceManager.weeklyGoal}\nLast session: ${preferenceManager.lastWorkoutMinutes} minutes\nStreak: ${preferenceManager.workoutStreak} days"
             textSize = 15f
             setTextColor(0xFFCCCCCC.toInt())
             setPadding(0, 0, 0, 20)
         }
 
+        val focusHeader = TextView(requireContext()).apply {
+            text = "Today's focus"
+            textSize = 18f
+            setTextColor(Color.WHITE)
+            setPadding(0, 0, 0, 8)
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+        }
+
         val dayBadge = TextView(requireContext()).apply {
-            text = "روز فعلی: ${routine.days.firstOrNull()?.dayName ?: "Mon"} · ${routine.days.firstOrNull()?.title ?: "Strength Base"}"
+            text = "${routine.days.firstOrNull()?.dayName ?: "Mon"} · ${routine.days.firstOrNull()?.title ?: "Strength Base"}"
             textSize = 16f
             setTextColor(0xFF00E676.toInt())
             setPadding(0, 0, 0, 16)
@@ -98,15 +123,18 @@ class HomeFragment : Fragment() {
         }
 
         val detail = TextView(requireContext()).apply {
-            text = "روتین پیشنهادی شامل گرم‌کردن، تمرینات اصلی، استراحت کنترل‌شده و تداوم روزانه است. در سطوح بالاتر، تمرین‌ها سنگین‌تر و تمرکز روی تکنیک و قدرت بیشتری دارد."
+            text = "This plan balances warm-up, main strength work, controlled rest, and a realistic progression system. Higher levels emphasize cleaner technique, heavier loading, and better control."
             textSize = 15f
             setTextColor(0xFFBDBDBD.toInt())
             setPadding(0, 16, 0, 0)
         }
 
         root.addView(title)
+        root.addView(subtitle)
+        root.addView(statHeader)
         root.addView(statPanel)
         root.addView(summaryText)
+        root.addView(focusHeader)
         root.addView(dayBadge)
         root.addView(button)
         root.addView(detail)

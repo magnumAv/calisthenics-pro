@@ -7,14 +7,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.PlayerView
-import com.calisthenicspro.R
 import com.calisthenicspro.data.WorkoutRoutine
 import com.calisthenicspro.databinding.ActivityWorkoutBinding
+import com.calisthenicspro.utils.ExerciseVideoResolver
 import com.calisthenicspro.utils.PreferenceManager
 import com.calisthenicspro.utils.WorkoutHistoryEntry
 import com.google.gson.Gson
-import java.lang.reflect.Field
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -91,66 +89,17 @@ class WorkoutActivity : AppCompatActivity() {
     }
 
     private fun playExerciseVideo(exerciseName: String) {
-        val videoResId = resolveExerciseVideoResId(exerciseName) ?: run {
+        val uri = ExerciseVideoResolver.resolveUri(this, exerciseName)
+        if (uri == null) {
             binding.playerView.visibility = View.GONE
             return
         }
 
         binding.playerView.visibility = View.VISIBLE
-        val uri = Uri.parse("android.resource://${packageName}/$videoResId")
         val mediaItem = MediaItem.fromUri(uri)
-
         player?.setMediaItem(mediaItem)
         player?.prepare()
         player?.playWhenReady = true
-    }
-
-    private fun resolveExerciseVideoResId(exerciseName: String): Int? {
-        val normalized = exerciseName.lowercase(Locale.US)
-            .replace("&", "and")
-            .replace("-", "_")
-            .replace(" ", "_")
-            .replace("/", "_")
-            .replace("[^a-z0-9_]".toRegex(), "")
-            .trim('_')
-
-        val candidates = linkedSetOf(
-            "bodyweight_fitness_$normalized",
-            "bodyweight_fitness_${normalized}_mp4",
-            "bodyweight_fitness_${normalized}_exercise",
-            "bodyweight_fitness_${normalized}_movement"
-        )
-
-        val aliases = mapOf(
-            "push_up" to "bodyweight_fitness_pushup",
-            "pull_up" to "bodyweight_fitness_pullup",
-            "squat" to "bodyweight_fitness_squat",
-            "plank" to "bodyweight_fitness_plank",
-            "burpee" to "bodyweight_fitness_burpees",
-            "dips" to "bodyweight_fitness_parallel_bar_dips",
-            "pushup" to "bodyweight_fitness_pushup",
-            "pullup" to "bodyweight_fitness_pullup",
-            "lunge" to "bodyweight_fitness_deep_step_up",
-            "glute_bridge" to "bodyweight_fitness_arch"
-        )
-
-        val selectedName = aliases[normalized] ?: candidates.firstOrNull { name ->
-            try {
-                R.raw::class.java.getField(name)
-                true
-            } catch (_: Exception) {
-                false
-            }
-        }
-
-        return selectedName?.let { rawName ->
-            try {
-                val field: Field = R.raw::class.java.getField(rawName)
-                field.getInt(null)
-            } catch (_: Exception) {
-                null
-            }
-        }
     }
 
     private fun nextExercise() {
