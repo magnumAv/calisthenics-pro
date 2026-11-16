@@ -1,6 +1,6 @@
 name: Build Android APK
 
-'on':
+on:
   workflow_dispatch:
   push:
     branches: [main, master]
@@ -9,7 +9,7 @@ name: Build Android APK
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
@@ -25,17 +25,17 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v4
-
-      - name: Generate Gradle wrapper
-        run: gradle wrapper --no-daemon
+      - name: Set up Gradle 8.5
+        uses: gradle/actions/setup-gradle@v5
+        with:
+          gradle-version: '8.5'
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        run: gradle assembleDebug --stacktrace --no-daemon
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: CalisthenicsPro-Debug-APK
           path: calisthenics-pro-app/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
