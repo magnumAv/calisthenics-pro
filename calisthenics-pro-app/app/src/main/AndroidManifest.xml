@@ -31,5 +31,21 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.assessment.DifficultyAssessmentActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.workout.WorkoutActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.timer.IntervalTimerActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.analytics.AnalyticsActivity"
+            android:exported="false" />
+
     </application>
 </manifest>

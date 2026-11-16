@@ -6,21 +6,21 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="androidx.fragment.app.Fragment"
-        android:title="@string/nav_home" />
+        android:name="com.calisthenicspro.ui.home.HomeFragment"
+        android:label="@string/nav_home" />
 
     <fragment
         android:id="@+id/workoutsFragment"
-        android:name="androidx.fragment.app.Fragment"
-        android:title="@string/nav_workouts" />
+        android:name="com.calisthenicspro.ui.workout.WorkoutPlanFragment"
+        android:label="@string/nav_workouts" />
 
     <fragment
         android:id="@+id/recordFragment"
-        android:name="androidx.fragment.app.Fragment"
-        android:title="@string/nav_record" />
+        android:name="com.calisthenicspro.ui.analytics.ProgressFragment"
+        android:label="@string/nav_record" />
 
     <fragment
         android:id="@+id/profileFragment"
-        android:name="androidx.fragment.app.Fragment"
-        android:title="@string/nav_profile" />
+        android:name="com.calisthenicspro.ui.profile.ProfileFragment"
+        android:label="@string/nav_profile" />
 </navigation>

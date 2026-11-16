@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="لطفاً سطح فعلی قدرت بدنی خود را انتخاب کنید تا حرکات و روتین متناسب با شما تنظیم شود:"
+        android:text="سطح، تعداد روزهای تمرین و هدف تمرینی را انتخاب کنید تا برنامه‌ی شخصی‌سازی‌شده ساخته شود."
         android:textColor="#CCCCCC"
         android:textSize="14sp"
         android:gravity="center"
@@ -27,6 +27,20 @@
 
     <Spinner
         android:id="@+id/spinnerLevel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/surface"
+        android:layout_marginBottom="16dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerDays"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/surface"
+        android:layout_marginBottom="16dp"/>
+
+    <Spinner
+        android:id="@+id/spinnerGoal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/surface"

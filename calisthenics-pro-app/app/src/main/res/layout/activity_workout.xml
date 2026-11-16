@@ -1,69 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/background"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
 
-    <!-- ویدیو پلیر -->
-    <androidx.media3.ui.PlayerView
-        android:id="@+id/playerView"
+    <TextView
+        android:id="@+id/tvDayTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="روز تمرینی"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/tvExerciseName"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/controlsLayout"
-        app:layout_constraintTop_toTopOf="parent"
-        app:use_controller="false" />
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Push-up"
+        android:textColor="@color/accent"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"/>
 
-    <!-- اورلی استراحت (Rest Overlay) -->
-    <FrameLayout
-        android:id="@+id/restOverlay"
+    <TextView
+        android:id="@+id/tvExerciseMeta"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#CC000000"
-        android:visibility="gone">
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="3 ست × 10 تکرار"
+        android:textColor="#DDDDDD"
+        android:textSize="16sp"
+        android:layout_marginBottom="24dp"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/tvTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00:30"
+        android:textColor="@color/white"
+        android:textSize="52sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="زمان استراحت"
-                android:textColor="@color/white"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tvProgress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1 / 4"
+        android:textColor="#BBBBBB"
+        android:textSize="16sp"
+        android:layout_marginBottom="32dp"/>
 
-            <TextView
-                android:id="@+id/tvTimer"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="60"
-                android:textColor="@color/accent"
-                android:textSize="48sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </FrameLayout>
-
-    <!-- پنل کنترل پایین -->
     <LinearLayout
-        android:id="@+id/controlsLayout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/surface"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="16dp"
-        app:layout_constraintBottom_toBottomOf="parent">
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnPrevious"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="قبلی"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/surface"/>
 
         <Button
             android:id="@+id/btnNext"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="تمرین بعدی"
-            android:backgroundTint="@color/secondary" />
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:text="بعدی"
+            android:backgroundTint="@color/secondary"/>
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -20,20 +20,37 @@ class DifficultyAssessmentActivity : AppCompatActivity() {
 
         preferenceManager = PreferenceManager(this)
 
-        val levels = arrayOf("مبتدی (نیاز به حرکات اصلاحی و آسان)", "متوسط (توانایی اجرای حرکات پایه مثل بارفیکس و شنا)", "پیشرفته (تسلط بر حرکات تعادلی، هندستاند و ماسل‌آپ)")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, levels)
-        binding.spinnerLevel.adapter = adapter
+        val levels = arrayOf(
+            "مبتدی (شروع آسان و تکنیک‌محور)",
+            "متوسط (سطح پایه calisthenics)",
+            "پیشرفته (حرکات تخصصی و قدرت بالا)"
+        )
+        val dayOptions = arrayOf("3 روز در هفته", "4 روز در هفته", "5 روز در هفته")
+        val goalOptions = arrayOf("General Fitness", "Strength", "Muscle Gain", "Skill Work")
+
+        binding.spinnerLevel.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, levels)
+        binding.spinnerDays.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, dayOptions)
+        binding.spinnerGoal.adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, goalOptions)
 
         binding.btnSaveAssessment.setOnClickListener {
-            val selectedPosition = binding.spinnerLevel.selectedItemPosition
-            val levelName = when(selectedPosition) {
+            val levelName = when (binding.spinnerLevel.selectedItemPosition) {
                 0 -> "Beginner"
                 1 -> "Intermediate"
                 else -> "Advanced"
             }
 
-            // ذخیره سطح کاربر
-            preferenceManager.userId = levelName
+            val selectedDays = when (binding.spinnerDays.selectedItemPosition) {
+                0 -> 3
+                1 -> 4
+                else -> 5
+            }
+
+            val selectedGoal = goalOptions[binding.spinnerGoal.selectedItemPosition]
+
+            preferenceManager.userLevel = levelName
+            preferenceManager.trainingDays = selectedDays
+            preferenceManager.weeklyGoal = selectedGoal
+            preferenceManager.hasCompletedAssessment = true
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
